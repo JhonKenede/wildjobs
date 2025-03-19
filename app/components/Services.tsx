@@ -11,7 +11,7 @@ interface Service {
 
 export const Services = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState<Service | null>(null); // Usar el tipo 'Service'
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
 
   const services: Service[] = [
     {
@@ -40,7 +40,7 @@ export const Services = () => {
     },
   ];
 
-  const handleServiceClick = (service: Service) => {  // Usar el tipo 'Service'
+  const handleServiceClick = (service: Service) => {
     setSelectedService(service);
     setIsModalOpen(true);
   };
@@ -48,6 +48,15 @@ export const Services = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedService(null);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    // Solo se permite cerrar el modal si la tecla presionada es 'Enter' o 'Space' y estamos en el fondo (no en un input o textarea)
+    if (!(e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLInputElement)) {
+      if (e.key === " " || e.key === "Enter") {
+        closeModal();  // Cerramos el modal
+      }
+    }
   };
 
   return (
@@ -61,9 +70,9 @@ export const Services = () => {
                 key={index}
                 className="bg-white shadow-lg rounded-lg overflow-hidden transition transform hover:scale-105 hover:shadow-2xl cursor-pointer"
                 onClick={() => handleServiceClick(service)}
-                role="button" // Agregar role="button"
-                tabIndex={0}  // Hacerlo accesible con la tecla Tab
-                onKeyPress={(e) => { // Soporte para teclado
+                role="button"
+                tabIndex={0}
+                onKeyPress={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
                     handleServiceClick(service);
                   }
@@ -92,18 +101,14 @@ export const Services = () => {
       {isModalOpen && (
         <div
           className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center"
-          onClick={closeModal} // Cerrar modal al hacer clic en el fondo
-          role="button" // Añadir role="button" para accesibilidad
-          tabIndex={0} // Hacerlo accesible con teclado
-          onKeyPress={(e) => { // Soporte para teclado
-            if (e.key === "Enter" || e.key === " ") {
-              closeModal();
-            }
-          }}
+          onClick={closeModal}
+          role="button"
+          tabIndex={0}
+          onKeyDown={handleKeyDown} // Solo cerrar si no estamos en un input o textarea
         >
           <div
-            className="bg-white rounded-lg max-w-lg w-full p-6 relative"
-            onClick={(e) => e.stopPropagation()} // Evitar cerrar el modal al hacer clic en su contenido
+            className="bg-white rounded-lg max-w-lg w-full p-6 relative overflow-auto max-h-[80vh] focus:outline-none"
+            onClick={(e) => e.stopPropagation()} // Evitar el cierre si se hace click en el modal
           >
             <button
               onClick={closeModal}
@@ -120,7 +125,7 @@ export const Services = () => {
                 <input
                   type="text"
                   id="name"
-                  className="w-full p-2 rounded border border-gray-300"
+                  className="w-full p-2 rounded border border-gray-300 text-black"
                   placeholder="Tu nombre"
                 />
               </div>
@@ -129,7 +134,7 @@ export const Services = () => {
                 <input
                   type="email"
                   id="email"
-                  className="w-full p-2 rounded border border-gray-300"
+                  className="w-full p-2 rounded border border-gray-300 text-black"
                   placeholder="Tu correo electrónico"
                 />
               </div>
@@ -137,8 +142,9 @@ export const Services = () => {
                 <label htmlFor="message" className="block mb-2 text-gray-700">Mensaje</label>
                 <textarea
                   id="message"
-                  className="w-full p-2 rounded border border-gray-300"
+                  className="w-full p-2 rounded border border-gray-300 text-black"
                   placeholder="Tu mensaje"
+                  rows={4}
                 />
               </div>
               <button

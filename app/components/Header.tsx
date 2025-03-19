@@ -1,24 +1,33 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link"; // Importamos Link para la navegación en Next.js
 
 export const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // Función para manejar el clic en el enlace y cerrar el menú
+  const handleMenuClick = () => {
+    setMenuOpen(false); // Cierra el menú
+  };
 
   return (
     <header className="bg-blue-600 text-white py-4 w-full fixed top-0 left-0 z-50">
       <nav className="container mx-auto flex justify-between items-center px-6">
         {/* Logo */}
         <div className="flex items-center">
-          <Image
-            src="/logos/logo.jpg" // Ruta relativa a la carpeta `public`
-            alt="Electricidad Profesional Logo"
-            width={40}
-            height={40}
-            className="h-10 w-10 mr-2"
-            priority
-          />
-          <h1 className="text-2xl font-bold">Electricidad & Aire Acondicionado</h1>
+          <Link href="/" passHref> {/* Esto redirige a la página principal */}
+            <Image
+              src="/logos/logo.jpg" // Ruta relativa a la carpeta `public`
+              alt="Electricidad Profesional Logo"
+              width={40}
+              height={40}
+              className="h-10 w-10 mr-2"
+              priority
+            />
+          </Link>
+          {/* Título con tamaño de fuente adaptado */}
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">Electricidad & Aire Acondicionado</h1>
         </div>
 
         {/* Botón de menú para móviles */}
@@ -38,20 +47,16 @@ export const Header = () => {
           }`}
         >
           <li>
-            <a href="#services" className="hover:underline block">
-              Servicios
-            </a>
+            <Link href="/" className="hover:underline block" onClick={handleMenuClick}>
+              Home
+            </Link>
           </li>
           <li>
-            <a href="#about" className="hover:underline block">
+            <Link href="/about" className="hover:underline block" onClick={handleMenuClick}>
               Nosotros
-            </a>
+            </Link>
           </li>
-          <li>
-            <a href="#contact" className="hover:underline block">
-              Contacto
-            </a>
-          </li>
+         
         </ul>
       </nav>
     </header>

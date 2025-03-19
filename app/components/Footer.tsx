@@ -1,3 +1,6 @@
+
+import Link from "next/link";
+
 export const Footer = () => (
   <footer className="bg-gray-800 text-white w-full">
     <div className="py-12 px-6">
@@ -17,9 +20,9 @@ export const Footer = () => (
             <li>
               <a href="#services" className="hover:underline text-gray-400">Servicios</a>
             </li>
-            <li>
-              <a href="#about" className="hover:underline text-gray-400">Nosotros</a>
-            </li>
+            <Link href="/about">
+              <p className="hover:underline text-gray-400">Nosotros</p>
+            </Link>
             <li>
               <a href="#contact" className="hover:underline text-gray-400">Contacto</a>
             </li>
