@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Electricidad Profesional",
   description: "Servicios eléctricos de calidad en tu zona.",
   icons: {
-    icon: "/logos/favicon.ico",
+    icon: "/logos/logo_circular_transparente.png",
   },
 };
 
