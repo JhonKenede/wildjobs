@@ -1,64 +1,77 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link"; // Importamos Link para la navegación en Next.js
+import Link from "next/link";
+import { FiPhone, FiMail } from "react-icons/fi";
 
 export const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [copiedText, setCopiedText] = useState<string | null>(null);
 
-  // Función para manejar el clic en el enlace y cerrar el menú
-  const handleMenuClick = () => {
-    setMenuOpen(false); // Cierra el menú
+  const copyToClipboard = (text: string) => {
+    if (typeof window !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(() => {
+        setCopiedText(text);
+        setTimeout(() => setCopiedText(null), 2000); // Oculta después de 2s
+      });
+    }
   };
 
   return (
-    <header className="bg-blue-600 text-white py-4 w-full fixed top-0 left-0 z-50">
-      <nav className="container mx-auto flex justify-between items-center px-6">
-        {/* Logo */}
-        <div className="flex items-center">
-          <Link href="/" passHref> {/* Esto redirige a la página principal */}
+    <header className="bg-[rgba(31,41,55,0.9)] backdrop-blur-sm text-white w-full fixed top-0 left-0 z-50 shadow-md">
+      <nav className="container mx-auto flex justify-between items-center px-6 h-16">
+        <div className="flex items-center gap-3">
+          <Link href="/" className="block">
             <Image
-              src="/logos/logo.jpg" // Ruta relativa a la carpeta `public`
+              src="/logos/logo_circular_transparente.png"
               alt="Electricidad Profesional Logo"
-              width={40}
-              height={40}
-              className="h-10 w-10 mr-2"
+              width={48}
+              height={48}
+              className="h-12 w-12 rounded-full object-cover"
               priority
             />
           </Link>
-          {/* Título con tamaño de fuente adaptado */}
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">Electricidad & Aire Acondicionado</h1>
+          <h1 className="hidden sm:block text-xl sm:text-2xl font-bold tracking-tight">
+            WildJobs
+          </h1>
         </div>
 
-        {/* Botón de menú para móviles */}
         <button
           className="sm:hidden text-white text-2xl"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Abrir menú"
-          aria-expanded={menuOpen}
         >
           ☰
         </button>
 
-        {/* Menú de navegación */}
         <ul
-          className={`absolute sm:relative top-full left-0 sm:top-0 sm:left-auto bg-blue-600 sm:bg-transparent w-full sm:w-auto flex flex-col sm:flex-row gap-4 sm:gap-6 p-4 sm:p-0 transition-all duration-300 ease-in-out ${
+          className={`absolute sm:relative top-full left-0 sm:top-0 sm:left-auto bg-[rgba(31,41,55,0.95)] sm:bg-transparent w-full sm:w-auto flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6 px-6 sm:px-0 py-4 sm:py-0 transition-all duration-300 ease-in-out ${
             menuOpen ? "block" : "hidden sm:flex"
           }`}
         >
-          <li>
-            <Link href="/" className="hover:underline block" onClick={handleMenuClick}>
-              Home
-            </Link>
+          <li
+            className="flex items-center gap-2 text-sm sm:text-base cursor-pointer"
+            onClick={() => copyToClipboard("+34 633 662 935")}
+          >
+            <FiPhone className="text-blue-400" />
+            <span>633 662 935</span>
           </li>
-          <li>
-            <Link href="/about" className="hover:underline block" onClick={handleMenuClick}>
-              Nosotros
-            </Link>
+          <li
+            className="flex items-center gap-2 text-sm sm:text-base cursor-pointer"
+            onClick={() => copyToClipboard("wildjobs.oficial@gmail.com")}
+          >
+            <FiMail className="text-blue-400" />
+            <span>wildjobs.oficial@gmail.com</span>
           </li>
-         
         </ul>
       </nav>
+
+      {/* Copiado feedback */}
+      {copiedText && (
+        <div className="absolute bottom-0 right-0 mb-2 mr-4 bg-green-600 text-white px-4 py-2 rounded shadow-md text-sm">
+          Copiado: {copiedText}
+        </div>
+      )}
     </header>
   );
 };

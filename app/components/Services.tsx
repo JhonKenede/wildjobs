@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import BotonLlamar from "./CallButton";
 
-// Definir el tipo de los servicios
 interface Service {
   title: string;
   description: string;
@@ -15,27 +15,27 @@ export const Services = () => {
 
   const services: Service[] = [
     {
-      title: "Aire Acondicionado",
+      title: "Climatización y Aire Acondicionado",
       description:
-        "Instalamos y mantenemos sistemas de aire acondicionado de alto rendimiento, asegurando un clima confortable y eficiente en tu hogar o empresa.",
+        "Instalamos y mantenemos sistemas de aire acondicionado eficientes en la Costa del Sol. Soluciones modernas, de bajo consumo, para hogares, empresas y locales comerciales",
       image: "/images/services/service1.jpg",
     },
     {
       title: "Instalaciones Eléctricas",
       description:
-        "Instalamos sistemas eléctricos seguros y eficientes, adaptados a tus necesidades, garantizando la máxima seguridad y fiabilidad.",
+        "Instalamos sistemas eléctricos seguros y eficientes en Marbella. Electricistas certificados, tecnología moderna y cumplimiento total de normativas vigentes.",
       image: "/images/services/servicio4.jpg",
     },
     {
       title: "Mantenimiento Eléctrico",
       description:
-        "Realizamos mantenimiento preventivo y correctivo para asegurar que tu instalación eléctrica funcione sin interrupciones ni fallos.",
+        "Servicio eléctrico preventivo y correctivo en San Pedro Alcantara. Evita fallos y cortes con atención rápida, segura y profesional.",
       image: "/images/services/service2.jpg",
     },
     {
-      title: "Reparaciones Urgentes",
+      title: "Servicios Urgentes",
       description:
-        "Ofrecemos servicio de reparación urgente para cualquier fallo eléctrico, trabajando con rapidez y eficacia para solucionar el problema de inmediato.",
+        "Reparaciones eléctricas urgentes en Estepona. Solucionamos cortes, cortocircuitos y averías con rapidez, seguridad y atención profesional inmediata.",
       image: "/images/services/service3.jpg",
     },
   ];
@@ -51,19 +51,26 @@ export const Services = () => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    // Solo se permite cerrar el modal si la tecla presionada es 'Enter' o 'Space' y estamos en el fondo (no en un input o textarea)
-    if (!(e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLInputElement)) {
+    if (
+      !(
+        e.target instanceof HTMLTextAreaElement ||
+        e.target instanceof HTMLInputElement
+      )
+    ) {
       if (e.key === " " || e.key === "Enter") {
-        closeModal();  // Cerramos el modal
+        closeModal();
       }
     }
   };
 
   return (
     <>
-      <section id="services" className="py-16 bg-gradient-to-b from-gray-100 via-gray-200 to-gray-300">
+      {/* Sección de servicios */}
+      <section className="pt-24 pb-16 bg-gradient-to-b from-[#dddddd] via-gray-200 to-gray-300">
         <div className="container mx-auto text-center">
-          <h2 className="text-4xl font-bold text-gray-800 mb-12">Nuestros Servicios</h2>
+          <h2 className="text-4xl font-bold text-gray-800 mb-12">
+            Nuestros Servicios
+          </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
             {services.map((service, index) => (
               <div
@@ -88,7 +95,9 @@ export const Services = () => {
                   />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-2xl font-semibold text-gray-800 mb-4">{service.title}</h3>
+                  <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+                    {service.title}
+                  </h3>
                   <p className="text-gray-600">{service.description}</p>
                 </div>
               </div>
@@ -104,11 +113,11 @@ export const Services = () => {
           onClick={closeModal}
           role="button"
           tabIndex={0}
-          onKeyDown={handleKeyDown} // Solo cerrar si no estamos en un input o textarea
+          onKeyDown={handleKeyDown}
         >
           <div
             className="bg-white rounded-lg max-w-lg w-full p-6 relative overflow-auto max-h-[80vh] focus:outline-none"
-            onClick={(e) => e.stopPropagation()} // Evitar el cierre si se hace click en el modal
+            onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={closeModal}
@@ -121,7 +130,9 @@ export const Services = () => {
             </h3>
             <form>
               <div className="mb-4">
-                <label htmlFor="name" className="block mb-2 text-gray-700">Nombre</label>
+                <label htmlFor="name" className="block mb-2 text-gray-700">
+                  Nombre
+                </label>
                 <input
                   type="text"
                   id="name"
@@ -130,7 +141,9 @@ export const Services = () => {
                 />
               </div>
               <div className="mb-4">
-                <label htmlFor="email" className="block mb-2 text-gray-700">Correo Electrónico</label>
+                <label htmlFor="email" className="block mb-2 text-gray-700">
+                  Correo Electrónico
+                </label>
                 <input
                   type="email"
                   id="email"
@@ -139,7 +152,9 @@ export const Services = () => {
                 />
               </div>
               <div className="mb-4">
-                <label htmlFor="message" className="block mb-2 text-gray-700">Mensaje</label>
+                <label htmlFor="message" className="block mb-2 text-gray-700">
+                  Mensaje
+                </label>
                 <textarea
                   id="message"
                   className="w-full p-2 rounded border border-gray-300 text-black"
@@ -157,6 +172,40 @@ export const Services = () => {
           </div>
         </div>
       )}
+
+      {/* Servicios urgentes */}
+      <section className="bg-[#0F3E64] text-white py-16 px-4 sm:px-6">
+        <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+          {/* Texto a la izquierda */}
+          <div>
+            <h1 className="text-2xl sm:text-4xl font-bold mb-4 scroll-mt-28">
+              Servicios Urgentes
+            </h1>
+            <p className="text-sm sm:text-base mb-6 max-w-xl leading-relaxed">
+              Atención inmediata de 6 a 22 h. Brindamos asistencia remota y
+              visitas rápidas en la Costa del Sol. Si no se resuelve el problema
+              por teléfono, acudimos con técnicos certificados para reparar
+              fallos eléctricos o de climatización en viviendas, locales y
+              oficinas.
+            </p>
+            <div className="w-full flex justify-start sm:justify-start">
+              <BotonLlamar />
+            </div>
+          </div>
+
+          {/* Imagen a la derecha */}
+          <div className="w-full flex justify-center items-center">
+            <Image
+              src="/images/jhon24hnaranja.png"
+              alt="Servicio 24 horas"
+              width={140}
+              height={140}
+              className="object-contain sm:w-[180px] sm:h-[180px] md:w-[200px] md:h-[200px]"
+              priority
+            />
+          </div>
+        </div>
+      </section>
     </>
   );
 };
