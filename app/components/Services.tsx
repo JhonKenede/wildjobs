@@ -52,7 +52,7 @@ export const Services = () => {
     setSuccess(false);
 
     const data = {
-      to: ["info@wildjobs.es"],
+      to: ["wildjobs.oficia@gmail.com"], // destinatario interno fijo
       subject: `Solicitud de presupuesto: ${selectedService?.title}`,
       html: `
       <p><strong>Nombre:</strong> ${name}</p>
