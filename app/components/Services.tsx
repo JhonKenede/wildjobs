@@ -10,6 +10,12 @@ interface Service {
 }
 
 export const Services = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
 
@@ -39,6 +45,57 @@ export const Services = () => {
       image: "/images/services/service3.jpg",
     },
   ];
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    setSuccess(false);
+
+    const data = {
+      to: ["info@wildjobs.es"],
+      subject: `Solicitud de presupuesto: ${selectedService?.title}`,
+      html: `
+      <p><strong>Nombre:</strong> ${name}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Mensaje:</strong> ${message}</p>
+      <p><strong>Servicio:</strong> ${selectedService?.title}</p>
+      <p><strong>Descripción:</strong> ${selectedService?.description}</p>
+    `,
+      clientEmail: email,
+      clientName: name,
+      serviceTitle: selectedService?.title || "Sin título",
+    };
+
+    console.log("🟡 Enviando datos:", data);
+
+    try {
+      const response = await fetch(
+        "https://wildjobs-backend.onrender.com/api/v1/email/send",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        }
+      );
+
+      const result = await response.json();
+      console.log("🟢 Respuesta:", result);
+
+      if (response.ok) {
+        setSuccess(true);
+        setName("");
+        setEmail("");
+        setMessage("");
+      } else {
+        setError("No se pudo enviar el correo");
+      }
+    } catch (err) {
+      console.error("❌ Error:", err);
+      setError("Error de red");
+    }
+
+    setLoading(false);
+  };
 
   const handleServiceClick = (service: Service) => {
     setSelectedService(service);
@@ -128,7 +185,7 @@ export const Services = () => {
             <h3 className="text-xl font-bold mb-4 text-gray-800">
               Contáctanos sobre: {selectedService?.title}
             </h3>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label htmlFor="name" className="block mb-2 text-gray-700">
                   Nombre
@@ -136,6 +193,9 @@ export const Services = () => {
                 <input
                   type="text"
                   id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
                   className="w-full p-2 rounded border border-gray-300 text-black"
                   placeholder="Tu nombre"
                 />
@@ -147,6 +207,9 @@ export const Services = () => {
                 <input
                   type="email"
                   id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
                   className="w-full p-2 rounded border border-gray-300 text-black"
                   placeholder="Tu correo electrónico"
                 />
@@ -157,6 +220,9 @@ export const Services = () => {
                 </label>
                 <textarea
                   id="message"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  required
                   className="w-full p-2 rounded border border-gray-300 text-black"
                   placeholder="Tu mensaje"
                   rows={4}
@@ -164,10 +230,19 @@ export const Services = () => {
               </div>
               <button
                 type="submit"
+                disabled={loading}
                 className="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
               >
-                Enviar
+                {loading ? "Enviando..." : "Enviar"}
               </button>
+              {success && (
+                <p className="text-green-600 mt-4 text-center">
+                  Correo enviado ✅
+                </p>
+              )}
+              {error && (
+                <p className="text-red-600 mt-4 text-center">{error}</p>
+              )}
             </form>
           </div>
         </div>

@@ -25,15 +25,29 @@ export const ContactForm = ({ selectedService }: ContactFormProps) => {
     setLoading(true);
     setError("");
     setSuccess(false);
-    console.log("Enviando formulario...");
+
+    // Construir los datos del body
+    const data = {
+      to: ["info@wildjobs.es"], // destinatario interno fijo
+      subject: `Solicitud de presupuesto: ${selectedService?.title}`,
+      html: `
+      <p><strong>Nombre:</strong> ${name}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Mensaje:</strong> ${message}</p>
+      <p><strong>Servicio:</strong> ${selectedService?.title}</p>
+      <p><strong>Descripción:</strong> ${selectedService?.description}</p>
+    `,
+      clientEmail: email,
+      clientName: name,
+      serviceTitle: selectedService?.title || "Sin título",
+    };
+
+    console.log("🟡 Enviando datos al backend:", data);
+
     try {
       const response = await axios.post(
-        "https://wildjobs-backend.onrender.com/api/v1/email/send", // Cambia esto por la URL de tu backend
-        {
-          to: [email],
-          subject: `Solicitud de presupuesto: ${selectedService?.title}`,
-          body: `Nombre: ${name}\nEmail: ${email}\n\nMensaje: ${message}\n\nTipo de servicio: ${selectedService?.title}\nDescripción: ${selectedService?.description}`,
-        },
+        "https://wildjobs-backend.onrender.com/api/v1/email/send",
+        data,
         {
           headers: {
             "Content-Type": "application/json",
@@ -41,17 +55,24 @@ export const ContactForm = ({ selectedService }: ContactFormProps) => {
         }
       );
 
-      console.log("Respuesta recibida de Resend API: ", response);
+      console.log("🟢 Respuesta del backend:", response);
+
       if (response.status === 200) {
         setSuccess(true);
         setName("");
         setEmail("");
         setMessage("");
       }
-    } catch (err) {
-      console.error("Error al enviar correo: ", err);
-      setError("Ocurrió un error al enviar el correo");
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        console.error("🔴 Axios error:", err.response);
+        setError("Ocurrió un error al enviar el correo");
+      } else {
+        console.error("🔴 Error desconocido:", err);
+        setError("Error inesperado");
+      }
     }
+
     setLoading(false);
   };
 
