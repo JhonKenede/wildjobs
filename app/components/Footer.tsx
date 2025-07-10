@@ -7,8 +7,8 @@ export const Footer = () => (
         {/* Sobre Nosotros */}
         <div>
           <h3 className="text-lg font-semibold mb-4">Contacto</h3>
-          <p className="text-gray-400">633 662 935</p>
-          <p className="text-gray-400">wildjobs.oficial@gmail.com</p>
+          <p className="text-gray-400">633 693 246</p>
+          <p className="text-gray-400">wildjobs.oficia@gmail.com</p>
           <p className="text-gray-400">Marbella - Estepona</p>
         </div>
 

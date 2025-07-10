@@ -58,10 +58,10 @@ export const Header = () => {
           </li>
           <li
             className="flex items-center gap-2 text-sm sm:text-base cursor-pointer"
-            onClick={() => copyToClipboard("wildjobs.oficial@gmail.com")}
+            onClick={() => copyToClipboard("wildjobs.oficia@gmail.com")}
           >
             <FiMail className="text-blue-400" />
-            <span>wildjobs.oficial@gmail.com</span>
+            <span>wildjobs.oficia@gmail.com</span>
           </li>
         </ul>
       </nav>
