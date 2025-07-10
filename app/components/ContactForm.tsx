@@ -28,7 +28,7 @@ export const ContactForm = ({ selectedService }: ContactFormProps) => {
     console.log("Enviando formulario...");
     try {
       const response = await axios.post(
-        "http://0.0.0.0:7106/api/v1/email/send", // Cambia esto por la URL de tu backend
+        "https://wildjobs-backend.onrender.com/api/v1/email/send", // Cambia esto por la URL de tu backend
         {
           to: [email],
           subject: `Solicitud de presupuesto: ${selectedService?.title}`,
