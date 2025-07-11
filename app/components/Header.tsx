@@ -51,7 +51,7 @@ export const Header = () => {
         >
           <li
             className="flex items-center gap-2 text-sm sm:text-base cursor-pointer"
-            onClick={() => copyToClipboard("+34 633 662 935")}
+            onClick={() => copyToClipboard("+34 633 693 246")}
           >
             <FiPhone className="text-blue-400" />
             <span>633 693 246</span>

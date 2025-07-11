@@ -12,7 +12,7 @@ export default function BotonLlamar() {
       onMouseLeave={() => setHover(false)}
       className="px-6 py-3 bg-[#FD5314] rounded text-xl font-semibold hover:bg-[#FF7F3F] transition duration-300 ease-in-out transform hover:scale-105 inline-block"
     >
-      {hover ? "633 66 29 35" : "Llámanos"}
+      {hover ? "633 69 32 46" : "Llámanos"}
     </a>
   );
 }
