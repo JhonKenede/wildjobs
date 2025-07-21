@@ -24,7 +24,7 @@ export const Services = () => {
       title: "Climatización y Aire Acondicionado",
       description:
         "Instalamos y mantenemos sistemas de aire acondicionado eficientes en la Costa del Sol. Soluciones modernas, de bajo consumo, para hogares, empresas y locales comerciales",
-      image: "/images/services/service1.jpg",
+      image: "/images/services/electricity-service.png",
     },
     {
       title: "Instalaciones Eléctricas",
