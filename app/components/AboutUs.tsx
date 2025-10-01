@@ -1,4 +1,5 @@
 // components/AboutUs.tsx
+import Image from "next/image";
 import React from "react";
 
 const AboutUs = () => {
@@ -15,21 +16,23 @@ const AboutUs = () => {
               Comprometidos con la excelencia
             </h3>
             <p className="text-gray-600 text-lg leading-relaxed">
-              En <span className="font-semibold">[Nombre de tu Empresa]</span>, nos dedicamos a ofrecer soluciones de{" "}
+              En <span className="font-semibold">[Nombre de tu Empresa]</span>,
+              nos dedicamos a ofrecer soluciones de{" "}
               <span className="text-blue-600">electricidad</span> y{" "}
-              <span className="text-blue-600">aire acondicionado</span> con los más altos estándares de calidad.
+              <span className="text-blue-600">aire acondicionado</span> con los
+              más altos estándares de calidad.
             </p>
             <p className="text-gray-600 text-lg leading-relaxed mt-4">
               Nuestro equipo combina experiencia, innovación y compromiso para
-              garantizar resultados que superen tus expectativas. Estamos
-              listos para transformar tus necesidades en soluciones eficientes y
+              garantizar resultados que superen tus expectativas. Estamos listos
+              para transformar tus necesidades en soluciones eficientes y
               sostenibles.
             </p>
           </div>
 
           {/* Imagen */}
           <div className="md:w-1/2 flex justify-center">
-            <img
+            <Image
               src="/about-us.jpg"
               alt="Nuestro equipo trabajando"
               className="rounded-lg shadow-lg max-w-full h-auto"
